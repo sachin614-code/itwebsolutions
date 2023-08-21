@@ -1,0 +1,262 @@
+<style>
+ #availaibillity-modal-wrap .datepicker .active.day {
+    border-radius: 25px;
+    background-color: #007aff !important;
+    background-image: none !important;
+}
+#availaibillity-modal-wrap .modal-dialog{
+    pointer-events:cursor;
+}
+#availaibillity-modal-wrap  .datepicker{ width: 90% }
+#availaibillity-modal-wrap .table-condensed{ width: 100%;}
+#availaibillity-modal-wrap .custom-row-style{
+    align-items: center;
+    background-color: #80808024;
+    border-radius: 4px;
+    display: flex;
+    font-size: 12px;
+    justify-content: center;
+}
+#availaibillity-modal-wrap .set-custom-list-alignment {
+    max-height: 49vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#availaibillity-modal-wrap .text-primary {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-primary-rgb),var(--bs-text-opacity))!important;
+}
+#availaibillity-modal-wrap .cursor-pointer-custom {
+    cursor: pointer;
+}
+</style>
+
+<!-- The Modal -->
+<div class="modal" id="availaibillity-modal-wrap" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="min-width:65%;">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">ABC Venue</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body" style="background-color: #fff;">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xs-12 col-xl-12 mb-2">
+                    <h6>Availability</h6>
+                </div>
+                <div class="col-sm-8">
+                    
+                    <div id='datetimepicker'></div>
+                </div>
+                <div class="col-sm-4 siderowscstum" style="overflow: auto;height: 280px; ">
+                    
+                </div>
+
+                    <div class="col-sm-3  mt-2 justify-content-center align-item-center">
+                        <input class="rc-time-picker-input start_time" type="time" id="start_time" style="width:70%">
+                    </div> 
+                    <div class="col-sm-3  mt-2 w-auto">
+                      <input class="rc-time-picker-input end_time" type="time" id="end_time" style="width:70%">
+
+                    </div>
+                    <div class="col-sm-1 mt-1 apply-button-container">
+                        <button type="button" class="btn btn-primary btn-apply-custom" onclick="updateLists()">Apply </button>
+                    </div>
+                </div>
+            </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer" style="background-color: #fff;">
+            <div class="row w-500">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xl-6 d-flex justify-content-end p-0">
+                    <button type="button" class="btn btn-primary save-button-for-availablity" onclick="addAvailabaledates()">Save </button>
+                </div>
+            </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  
+<script>
+    let availdates =[];
+    let selecteddates = [];
+
+    $('#datetimepicker').datepicker({
+    multidate: true,
+        format: 'dd-mm-yyyy'
+    })
+    /*.on('changeDate', function(e) {
+        console.log(e.dates);
+        //new Date(e.date)
+    });*/ 
+    const getCourtDetails = async(id) => {
+        let resData = await fetch(`${location.origin}/court/edit/` + id, {
+          method: "get", headers: {
+            'Content-Type': 'application/json'
+          } }).then((res) => {
+          if (res.status === 200) {
+            return res.json()
+          }
+          return Promise.reject(res);
+        }).then((data) => {
+
+          $('body').find('.court_name').text(data.data.courtName);
+          $('body').find('#availaibillity-modal-wrap').modal('show');
+          availdates = data.data.availability;
+            (data.data.availability).map((row) => {
+                selecteddates.push(new Date(row.date));
+            });
+            appendavailablehtml(data.data.availability);
+            if(selecteddates.length !=0){
+              updateSelection(availdates);
+              //selecteddates.push("0");
+              //console.log(selecteddates);
+              //$('#datetimepicker').datepicker('setDates', selecteddates);
+          }
+          return data.data;
+        }).catch((err) => {
+            console.log(err);
+          err.json().then((nextErr) => {
+            Swal.fire({
+              position: 'middle-center',
+              icon: 'error',
+              title: nextErr.statusMessage,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+        })
+      };
+
+      const appendavailablehtml = (rowsdata) => {
+        $("body").find('.siderowscstum').html('');
+        rowsdata.map((data) => {
+            let formatdate = new Date(data.date);
+            let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            let pdate = formatdate.getDate()+ ' '+  months[formatdate.getMonth()] +' '+formatdate.getFullYear();
+            //console.log(pdate);
+            let html = `<div class="row m-1 p-2 round-6 custom-row-style"><div class="col-md-3 col-sm-3 col-lg-3 col-xs-3 col-xl-3"><span>'${pdate}'</span></div><div class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4"><span>${data.time}</span></div><div class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4"><span>Pano 1</span></div><div class="col-md-1 col-sm-1 col-lg-1 col-xs-1 col-xl-1"><i class="fa fa-trash bi-trash cursor-pointer-custom" onclick="delAvailrow('${data._id}')" ></i></div></div>`;
+            let Custime_range =data.time.split("-");
+           // console.log(Custime_range[0].length);
+            let starttime = Custime_range[0].replace(/[^:\d]/g,'');
+            let endtime = Custime_range[1].replace(/[^:\d]/g,'');
+            let firststart = starttime.split(':');
+            let fendtime = endtime.split(':');
+            starttime = (firststart[0] < 10 ) ? '0'+ starttime : starttime;
+            endtime = (fendtime[0] < 10 ) ? '0'+ endtime : endtime;
+           // console.log("f="+fendtime[0]);console.log(endtime);
+            $('body').find('.start_time').val(starttime);
+            $('body').find('.end_time').val(endtime);
+            $("body").find('.siderowscstum').append(html);
+        });
+      };
+
+      const updateSelection = async(rowdata) =>{
+            selecteddates = [];
+            console.log(rowdata);
+            rowdata.map((row) =>{
+                selecteddates.push(new Date(row.date));
+            });
+            if(selecteddates.length !=0){
+              $('#datetimepicker').datepicker('setDates', selecteddates);
+            }else{
+                $('#datetimepicker').datepicker('setDates', []);
+            }
+      }
+
+      const updateLists = async() => {
+        const isValidData = validateAvailabilityFields()
+            if (!isValidData.status)
+                return Swal.fire({
+                    position: 'middle-center',
+                    icon: 'error',
+                    title: isValidData.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+        
+        //allselecteddates 
+        const alldates = $('#datetimepicker').datepicker('getDates');
+        let starttime = document.getElementById('start_time').value;
+        let endtime  = document.getElementById('end_time').value;
+        let startmed = getMeridianTime(starttime);        
+        let endmed = getMeridianTime(endtime); 
+console.log(availdates);
+        //uper loop all selected dates 
+        alldates.map( async (singledates) => {
+          let selecteddate = moment(singledates);
+          let checkverifydate = 0;
+
+          //inner loop 
+          for(j=0;j<= availdates.length; j++){
+            console.log(availdates[j]);
+            /*if(availdates[j].date !='' && availdates[j] !='') {
+              let olderdate = moment(availdates[j].date) 
+              if(olderdate.diff(selecteddate, "seconds") == 0){
+                 checkverifydate = 1;
+              }
+            }*/
+          }
+         
+          if(checkverifydate != 1){
+            console.log("S="+moment(singledates).format());
+            let pi = {'date':moment(singledates).format(), 'time': starttime +" "+startmed +"-"+ endtime +" "+ endmed, "_id": singledates.getDate()+''+(Math.random() + 1).toString(36).substring(7)};
+            console.log(pi);
+            availdates.push(pi);
+          }
+        });
+
+        console.log(availdates);
+        //availdates.push(newappendarry);
+
+        appendavailablehtml(availdates);
+        updateSelection(availdates);   
+      }
+
+      const validateAvailabilityFields = () => {
+            let starttime = $('body').find('.start_time').val();
+            let endtime  = $('body').find('.end_time').val();
+        if (!starttime || !endtime) return { status: false, msg: "Select Dates." }
+
+        return { status: true }
+      }
+
+      const delAvailrow = async(id) => {
+          availdates = availdates.filter((c) => c._id != id);  
+          appendavailablehtml(availdates);
+          updateSelection(availdates);   
+      };
+
+      function getMeridianTime(input) {
+        var timeSplit = input.split(':'),
+          hours,
+          minutes,
+          meridian;
+        hours = timeSplit[0];
+        minutes = timeSplit[1];
+        if (hours > 12) {
+          meridian = 'PM';
+          hours -= 12;
+        } else if (hours < 12) {
+          meridian = 'AM';
+          if (hours == 0) {
+            hours = 12;
+          }
+        } else {
+          meridian = 'PM';
+        }
+        return meridian;
+       
+      }
+
+
+</script>

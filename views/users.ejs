@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("./partials/head") %>
+    <title>Total Hoop | Users</title>
+</head>
+
+<body>
+
+  <%- include("./partials/navbar")%>
+    <%- include("./partials/sidebar")%>
+      <% const camel2title=(camelCase)=> camelCase
+        .replace(/([A-Z])/g, (match) => ` ${match}`)
+        .replace(/^./, (match) => match.toUpperCase())
+        .trim();
+        %>
+
+        <div class="content-wrapper">
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+                  <div style="display:flex;align-items:center;justify-content:right;font-size:23px;padding:8px;">
+                    <a href="/user/add"><i class="fa-solid fa-user-plus" style="cursor:pointer;color:#5900ffc8;"
+                        title="Add User"></i></a>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-tittle col-sm-2">
+                        <label style="font-weight:normal;">Role:</label>
+                        <select id="select" class="form-control" onchange="filter()">
+                          <option value="all" <%if(filter.role=='all' ){%>selected<%}%>>All</option>
+                          <option value="admin" <%if(filter.role=='admin' ){%>selected<%}%>>Admin</a></option>
+                          <option value="user" <%if(filter.role=='user' ){%>selected<%}%>>User</option>
+                          <option value="referee" <%if(filter.role=='referee' ){%>selected<%}%>>Referee</option>
+                          <option value="coach" <%if(filter.role=='coach' ){%>selected<%}%>>Coach</option>
+                          <option value="parent" <%if(filter.role=='parent' ){%>selected<%}%>>Parent</option>
+                          <option value="player" <%if(filter.role=='player' ){%>selected<%}%>>Player</option>
+                          <option value="gameStaff" <%if(filter.role=='gameStaff' ){%>selected<%}%>>Game Staff
+                          </option>
+                          <option value="programStaff" <%if(filter.role=='programStaff' ){%>selected<%}%>>Program
+                              Staff
+                          </option>
+                          <option value="fan" <%if(filter.role=='fan' ){%>selected<%}%>>Fan</option>
+
+                        </select>
+                      </div>
+
+                    </div>
+                    <div class="card-body">
+
+                      <table id="example1" class="table table-bordered table-striped">
+
+                        <thead>
+                          <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>State</th>
+                            <th>Zipcode</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%getCourts.map((e)=>{%>
+                            <tr>
+                              <td>
+                                <%=camel2title(e.firstName?e.firstName:"N /A")%>
+                              </td>
+                              <td>
+                                <%=camel2title(e.lastName?e.lastName:"N /A")%>
+                              </td>
+                              <td>
+                                <%=e.phone?e.phone:"N /A"%>
+                              </td>
+                              <td>
+                                <%=e.email?e.email:"N /A"%>
+                              </td>
+                              <td>
+                                <%=camel2title(e.gender?e.gender:"N /A")%>
+                              </td>
+                              <td>
+                                <%=camel2title(e.state?e.state:"N /A")%>
+                              </td>
+                              <td>
+                                <%=e.zip?e.zip:"N /A"%>
+                              </td>
+                              <td>
+                                <%=camel2title(e.role?e.role:"N /A")%>
+                              </td>
+                              <td style=`color:<%if(e.status=='active' ){%>green<%}else{%>red<%}%>`>
+                                    <%=camel2title(e.status?e.status:"N /A")%>
+                              </td>
+                              <td>
+                                <div style="display:flex;justify-content:space-between;column-gap: 10px;">
+                                  <span class="btn btn-info"><a href="/profile/<%=e._id%>"><i class="fa-solid fa-eye"
+                                        style="color:#fff; cursor:pointer;"></i></a> View</span>
+                                  <span class="btn btn-danger"><i class="fa-solid fa-trash"
+                                      style="color:#fff;cursor:pointer;"
+                                      onclick="warnning(`/profile/delete/<%-e._id%>`)"></i> Delete</span>
+                                  <%if(e.status=='active'){%> <span class="btn btn-warning"><a
+                                        href="/profile/status/<%-e._id%>"><i class="fa-solid fa-toggle-on"
+                                          style="color:#fff;cursor:pointer;"></i></a>
+                                      <%=camel2title(e.status?e.status:"N /A")%>
+                                    </span>
+                                    <%}else{%><span class="btn btn-warning"><a href="/profile/status/<%-e._id%>"><i
+                                            class="fa-solid fa-toggle-off" style="color:#fff;cursor:pointer;"></i></a>
+                                        <%=camel2title(e.status?e.status:"N /A")%>
+                                      </span>
+                                      <%}%>
+                            </tr>
+                            <%})%>
+
+                              <tfoot />
+                      </table>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+</body>
+<%- include("./partials/script")%>
+  <script>
+    $(function () {
+
+      $("#example1")
+        .DataTable({
+          responsive: true,
+          lengthChange: false,
+          autoWidth: false,
+          order: [],
+          // buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        })
+        .buttons()
+        .container()
+        .appendTo("#example1_wrapper  .col-md-6:eq(0)");
+
+      $("#example2").DataTable({
+        paging: true,
+        lengthChange: false,
+        searching: false,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        responsive: true,
+      });
+    });
+
+
+    function filter(e) {
+      // how to fetch data using
+      let role = document.querySelector("#select").value
+      if (role == "all")
+        return location.href = `/getUsers`
+      location.href = `?role=${role}`
+    }
+
+
+
+    function warnning(url) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((conf) => {
+        if (conf.isConfirmed) {
+          Swal.fire({
+            position: 'middle-center',
+            icon: 'success',
+            title: 'User Delete',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+          location.href = url
+        }
+
+      })
+    }
+  </script>
+
+</html>

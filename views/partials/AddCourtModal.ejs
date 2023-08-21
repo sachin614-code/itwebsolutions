@@ -1,0 +1,772 @@
+<style>
+    .image-container {
+        margin-bottom: 5px !important;
+        margin-right: 5px !important;
+        position: relative;
+    }
+
+    .rounded {
+        border-radius: var(--bs-border-radius) !important;
+
+    }
+
+    .photos-alignment-dropzone {
+        display: flex;
+        flex-wrap: wrap;
+        max-height: 89vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .alignment-close-button {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .image-container .overlay {
+        align-items: center;
+        background: #007aff;
+        border-radius: 50%;
+        box-shadow: 0 7px 29px 0 hsla(240, 5%, 41%, .2);
+        cursor: pointer;
+        display: flex;
+        height: 30px;
+        justify-content: center;
+        padding: 4px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        width: 30px;
+    }
+
+    .colose-icon-style {
+        color: #fff;
+    }
+
+    .file-drop-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 24px 10px;
+        gap: 10px;
+
+        width: 468px;
+        height: 106px;
+
+        background: rgba(1, 119, 193, 0.1);
+        border-radius: 8px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+
+    }
+
+    .choose-file-button {
+        /* flex-shrink: 0;
+        background-color: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        padding: 8px 15px;
+        margin-right: 10px;
+        font-size: 12px; */
+        text-transform: uppercase;
+    }
+
+    .file-message {
+        font-size: small;
+        font-weight: 300;
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .file-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+        opacity: 0;
+
+    }
+
+    .mt-100 {
+        margin-top: 100px;
+    }
+</style>
+
+<form class="modal fade" id="courtForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="min-width:65%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">ABC Venue</h5>
+                <button type="button" class="close" onclick="clearUpdateFormData()" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-6" style="padding:2%; border:1px solid #E1E2E9;">
+
+                        <b class="card-title">Details</b><br />
+                        <hr />
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputcourtName">Court Name</label>
+                                <input type="text" name="courtName" class="form-control" id="inputcourtName"
+                                    placeholder="Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Number of Courts in Gym</label>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-left-minus btn btn-secondary btn-number"
+                                            data-type="minus" data-field="">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" name="numberOfGyms" id="quantity" name="quantity"
+                                        class="form-control input-number" value="1" min="1" max="100">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-right-plus btn btn-secondary btn-number"
+                                            data-type="plus" data-field="">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputfloor">Floor Material</label>
+                                <input type="text" name="floorMaterial" class="form-control" id="inputfloor">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputfloorRate">Floor Rating</label>
+                                <input name="floorRating" type="text" class="form-control" id="inputfloorRate">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputCostperhour">Cost Per Hour</label>
+                                <input name="costPerHour" type="number" class="form-control" id="inputCostperhour">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputRowSeats">Rows of Seating</label>
+                                <select name="seatingRows" id="inputRowSeats" class="form-control">
+
+                                    <option value="01-03" selected>01-03</option>
+                                    <option value="04-07">04-07</option>
+                                    <option value="08-11">08-11</option>
+                                    <option value="12-15">12-15</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputbaselinedistance">Baseline Distance</label>
+                                <select name="baselineDistance" id="inputbaselinedistance" class="form-control">
+                                    <option value="01-03" selected>01-03</option>
+                                    <option value="04-07">04-07</option>
+                                    <option value="08-11">08-11</option>
+                                    <option value="12-15">12-15</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputSidelinedistance">Sideline Distance</label>
+                                <select name="sidelineDistance" id="inputSidelinedistance" class="form-control">
+                                    <option value="01-03" selected>01-03</option>
+                                    <option value="04-07">04-07</option>
+                                    <option value="08-11">08-11</option>
+                                    <option value="12-15">12-15</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="court_id" id="editcourt_id" value="">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputcourtRating">Court Rating</label>
+                                <select name="courtRating" id="inputcourtRating" class="form-control">
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputCourttype">Court Type</label>
+                                <select name="type" id="inputCourttype" class="form-control">
+                                    <option selected value="Main">Main</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="locandparkInstruction">Location and parking instruction</label>
+                            <textarea name="locationAndParkingInstructions" class="form-control"
+                                id="locandparkInstruction" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="padding:2%; border:1px solid #E1E2E9;">
+                        <b class="card-title">Photos</b><br />
+                        <hr />
+
+                        <div class="row">
+
+                            <label for="exampleFormControlTextarea1">Exterior or Building</label>
+
+                            <div class="col-md-12 form-group">
+                                <div class="file-drop-area">
+                                    <span class="choose-file-button"><i class="fa-solid fa-upload"></i></span>
+                                    <span class="file-message">Drop File here or click to upload</span>
+                                    <input name="exteriorPhotos" onchange="photoUpload('exteriorPhotos')"
+                                        id="exteriorPhotos" class="file-input photoUpload" type="file" multiple>
+                                </div>
+                            </div>
+                            <section>
+                                <aside class="photos-alignment-dropzone mt-2 ml-2 mr-2 extimgs">
+
+                                </aside>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <label for="exampleFormControlTextarea1">Court Floor</label>
+                            <div class="col-md-12 form-group">
+                                <div class="file-drop-area">
+                                    <span class="choose-file-button"><i class="fa-solid fa-upload"></i></span>
+                                    <span class="file-message">Drop File here or click to upload</span>
+                                    <input name="courtFloorPhotos" onchange="photoUpload('courtFloorPhotos')"
+                                        class="file-input photoUpload" id="courtFloorPhotos" type="file" multiple>
+                                </div>
+                            </div>
+                            <section>
+                                <aside class="photos-alignment-dropzone mt-2 ml-2 mr-2 courtsimgs">
+
+                                </aside>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <label for="exampleFormControlTextarea1">Gym</label>
+                            <div class="col-md-12 form-group">
+                                <div class="file-drop-area">
+                                    <span class="choose-file-button"><i class="fa-solid fa-upload"></i></span>
+                                    <span class="file-message">Drop File here or click to upload</span>
+                                    <input name="gymPhotos" onchange="photoUpload('gymPhotos')" id="gymPhotos"
+                                        class="file-input photoUpload" type="file" multiple>
+                                </div>
+
+                            </div>
+                            <section>
+                                <aside class="photos-alignment-dropzone mt-2 ml-2 mr-2 gymimgs">
+
+                                </aside>
+                            </section>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="display:flex;justify-content:space-between;width:100%;">
+                    <button type="button" class="btn btn-secondary" onclick="clearUpdateFormData()" data-dismiss="modal"
+                        aria-label="Close"><i class="fa-solid fa-arrow-left"></i>Back</button>
+                    <button onclick="addCourt()" id="toggleAddToUpdate" class="btn btn-primary addcourtbtn"><i
+                            class="fa-solid fa-check"></i>Done
+                    </button>
+                    <span class="editcourtbtn" style="display:none"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+<script>
+    let totalCourts = [];
+    let prevImages = {
+        exteriorPhotos: [],
+        courtFloorPhotos: [],
+        gymPhotos: []
+    }
+
+    let images = {
+        gymPhotos: [],
+        courtFloorPhotos: [],
+        exteriorPhotos: []
+    }
+
+    function photoUpload(id) {
+        let images = document.getElementById(id)
+    }
+
+
+
+    document.querySelector("#courtForm").addEventListener("submit", ((e) => {
+        e.preventDefault();
+    }))
+
+    const setDefault = () => {
+        $('body').find('.addcourtbtn').css('display', 'block');
+        $('body').find('.editcourtbtn').css('display', 'none');
+        document.getElementById("courtForm").reset();
+        document.querySelector("#courtForm").addEventListener("submit", ((e) => {
+            e.preventDefault();
+        }))
+    }
+
+    const addCourt = async () => {
+        document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+        $('body').find('.addcourtbtn').css('display', 'block');
+        $('body').find('.editcourtbtn').css('display', 'none');
+        let validateData = validateCourtInformation()
+        if (!validateData.status)
+            return alert("Invalid data!")
+        prevImages.courtFloorPhotos = [];
+        prevImages.exteriorPhotos = [];
+        prevImages.gymPhotos = [];
+
+        let courtImage = await uploadCourtImages()
+        const dataToSend = { ...validateData.data, ...courtImage }
+        let resData = await fetch(`${location.origin}/court/add`, {
+            method: "post", headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            }, body: JSON.stringify(dataToSend)
+        }).then((res) => {
+            if (res.status === 200) {
+                return res.json()
+            }
+            return Promise.reject(res);
+        }).then((data) => {
+            document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+            totalCourts.push(data.data)
+            Swal.fire({
+                icon: 'success',
+                title: data.statusMessage,
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                clearUpdateFormData();
+                frontendChange()
+                $('#courtForm').modal('toggle')
+            })
+            return data.data
+        }).catch((err) => {
+            document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+            err.json().then((nextErr) => {
+                Swal.fire({
+                    position: 'middle-center',
+                    icon: 'error',
+                    title: nextErr.statusMessage,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+        })
+
+
+    }
+    const uploadCourtImages = async () => {
+        let uploadedImages = {};
+        for (const property in images) {
+            if (images[property].length)
+                uploadedImages[property] = await uploadImage(images[property])
+        }
+        for (const property in prevImages) {
+            if (prevImages[property].length)
+                uploadedImages[property] = [...uploadedImages[property] ? uploadedImages[property] : '', ...prevImages[property]]
+        }
+        return uploadedImages
+    }
+    const uploadImage = async (imgArray) => {
+        const data = new FormData();
+        for (const file of imgArray) {
+            data.append("file", file)
+        }
+        data.append("type", "image")
+
+        let resData = await fetch(`${location.origin}/upload/multiple`, {
+            method: "post", body: data
+        }).then((res) => res.json()).then((res) => res.data.data).catch((err) => { })
+        return resData
+    }
+
+    const validateCourtInformation = () => {
+        const data = $('#courtForm').serializeArray().reduce(function (obj, item) {
+            obj[item.name] = item.value;
+            return obj;
+        }, {});
+
+        return { status: true, data }
+
+    }
+    const frontendChange = () => {
+
+        // addCourtButtonContainer
+        // courtListContainer
+        // {"status":true,"statusCode":200,"statusMessage":"Court Added Successfully","totalRecords":0,"data":{"courtName":"Court Name1","type":"Main","courtRating":1,"numberOfGyms":1,"seatingRows":"01-03","floorRating":" Floor Rating","floorMaterial":"Floor Material","baselineDistance":"01-03","sidelineDistance":"01-03","exteriorPhotos":[],"courtFloorPhotos":[],"gymPhotos":[],"locationAndParkingInstructions":"Location and parking instruction","courtCost":"$red","availabilityDays":"10 Days","isDelete":false,"createdBy":"6319c34b9dda6504956f28d8","_id":"6339a81469e1fd375b70aec4","createdAt":"2022-10-02T15:02:44.657Z","updatedAt":"2022-10-02T15:02:44.657Z","__v":0}}
+        if (totalCourts.length) {
+            document.querySelector("#addCourtButtonContainer").classList.add("hide")
+            document.querySelector("#courtListContainer").classList.remove("hide")
+            var t = $('#example2').DataTable();
+            t.clear();
+
+            totalCourts.map((C) => {
+                let totalImages = []
+                if (C.exteriorPhotos.length)
+                    totalImages.push(...C.exteriorPhotos)
+                if (C.courtFloorPhotos.length)
+                    totalImages.push(...C.courtFloorPhotos)
+                if (C.gymPhotos.length)
+                    totalImages.push(...C.gymPhotos)
+                let imges = imagesHtml(totalImages);
+                let court_id = "'" + C._id + "'";
+                t.row.add([C.courtName, C.seatingRows, C.floorRating, C.floorMaterial, C.baselineDistance, C.sidelineDistance, `<div class="row">${imges ? imges : 'No Image Available'}</div>`, `<div   style="display:flex;align-items:center;justify-content:space-between; width: 100%;height: 100%;"> <a  style="cursor:pointer" onclick="editCourt('${C._id}')"><i class="fa-sharp fa-solid fa-pen" style="cursor:pointer;color: blue;"></i></a> <a style="cursor:pointer" onclick="delCourt('${C._id}')"><i  class="fa-solid fa-trash" style="cursor:pointer;color:red"></i></a> </div>`]).draw();
+                // let tr = document.createElement("tr")
+                // let html = `  <td>${C.courtName}</td><td>${C.seatingRows}</td>td>${C.floorRating}</td><td>${C.floorMaterial}</td>
+                //               <td>${C.baselineDistance}</td>$<td>${C.sidelineDistance}</td> <td>\<div class="row"> <div class="col-lg-3 col-md-6 mb-3 mb-lg-0"> <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light"> <img src="https://mdbcdn.b-cdn.net/img/screens/yt/screen-video-1.webp"   class="w-100" /> </div></div> <div class="col-lg-3 col-md-6 mb-3 mb-lg-0"> <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light"><img src="https://mdbcdn.b-cdn.net/img/screens/yt/screen-video-1.webp"   class="w-100" />  </div> </div>  </div> </td> <td>  <div   style="display:flex;align-items:center;justify-content:space-between; width: 100%;height: 100%;"> <i class="fa-sharp fa-solid fa-pen" style="cursor:pointer;color: blue;"></i> <i  class="fa-solid fa-trash" style="cursor:pointer;color:red"></i> </div> </td>`
+                // tr.innerHTML = html;
+                // document.querySelector("#tBody").appendChild(tr)
+            })
+
+
+        } else {
+            document.querySelector("#courtListContainer").classList.add("hide")
+            document.querySelector("#addCourtButtonContainer").classList.remove("hide")
+
+        }
+    }
+
+    let imagesHtml = (images) => {
+        let str = ``;
+        images.map((img) => {
+            let html = `<div class="col-lg-3 col-md-6 mb-3 mb-lg-0"> <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light"> <img style="height:48px;width:48px;top:5px;left:68px;radius:4px" src='https://ballerapp.s3.us-east-2.amazonaws.com/${img}'   class="w-100" /> </div></div>`
+            str = str + html;
+
+        })
+        return str;
+
+    }
+
+
+
+
+
+
+    $(document).on('change', '.file-input', function () {
+        clearPrintendImage(this.name)
+        var filesCount = $(this)[0].files.length;
+        images[this.name] = this.files
+        var textbox = $(this).prev();
+
+        if (filesCount === 1) {
+            var fileName = $(this).val().split('\\').pop();
+            textbox.text(fileName);
+        } else {
+            textbox.text(filesCount + ' files selected');
+        }
+        showLocalImages(this.name)
+    });
+
+
+    const showLocalImages = async (properties) => {
+        if (images[properties].length) {
+            for (let file of images[properties]) {
+                let reader = new FileReader();
+                reader.onload = function () {
+                    let imgHTML = localDivImagesHtml(reader.result, properties, `${file.name}`)
+                    switch (properties) {
+                        case 'exteriorPhotos':
+                            document.querySelector(".extimgs").innerHTML += imgHTML
+                            break;
+                        case 'courtFloorPhotos':
+                            document.querySelector(".courtsimgs").innerHTML += imgHTML
+                            break;
+                        case 'gymPhotos':
+                            document.querySelector(".gymimgs").innerHTML += imgHTML
+                            break;
+                    }
+
+
+
+                }
+                reader.readAsDataURL(file)
+            }
+        }
+    }
+
+    let localDivImagesHtml = (src, type, id) => {
+        return `<div id='${id}' class="image-container"><img src="${src}" class="rounded" width="100" height="100"><div class="alignment-close-button"><div  onclick="delLocalImg('${src}','${type}','${id}')" class="overlay"><span class="colose-icon-style">X</span></div></div></div>`
+    }
+
+    const delLocalImg = (src, type, id) => {
+        var element = document.getElementById(id);
+        element.parentNode.removeChild(element);
+        images[type] = [...images[type]].filter((f) => f.name != id)
+    }
+
+    const clearPrintendImage = (properties) => {
+        if (images[properties].length) {
+            for (let file of images[properties]) {
+                var element = document.getElementById(file.name);
+                element.parentNode.removeChild(element);
+            }
+        }
+    }
+
+
+
+
+
+
+
+    $(document).ready(function () {
+
+        var quantitiy = 0;
+        $('.quantity-right-plus').click(function (e) {
+
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+
+            // If is not undefined
+
+            $('#quantity').val(quantity + 1);
+
+
+            // Increment
+
+        });
+
+        $('.quantity-left-minus').click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+
+            // If is not undefined
+
+            // Increment
+            if (quantity > 0) {
+                $('#quantity').val(quantity - 1);
+            }
+        });
+
+    });
+
+
+    const delCourt = async (id) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: 'ok',
+        }).then(async (willDelete) => {
+            document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+            if (!willDelete.isConfirmed) {
+                return false;
+            } else {
+                let resData = await fetch(`${location.origin}/court/delete/` + id, {
+                    method: "get", headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then((res) => {
+                    if (res.status === 200) {
+                        document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+                        Swal.fire({
+                            icon: 'success',
+                            title: res.statusMessage,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            let i = 0;
+                            // totalCourts.map((c) => {
+                            //     if (c._id == id) {
+                            //         totalCourts.splice(i);
+                            //     }
+                            //     i++;
+                            // });
+                            totalCourts = totalCourts.filter((c) => c._id != id)
+                            frontendChange();
+                        })
+                    } else {
+                        return Promise.reject(res);
+                    }
+                }).catch((err) => {
+                    document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+                    err.json().then((nextErr) => {
+                        Swal.fire({
+                            position: 'middle-center',
+                            icon: 'error',
+                            title: nextErr.statusMessage,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                });
+            }
+        });
+    }
+    const editCourt = async (id) => {
+        // $('body').find('.addcourtbtn').css('display', 'none');
+        clearUpdateFormData();
+        let courtData = totalCourts.filter((c) => c._id == id)
+        const data = courtData[0]
+        $('body').find("#inputcourtName").val(data.courtName);
+        $('body').find("#quantity").val(data.numberOfGyms);
+        $('body').find("#inputfloor").val(data.floorMaterial);
+        $('body').find("#inputRowSeats").val(data.seatingRows);
+        $('body').find("#inputbaselinedistance").val(data.baselineDistance);
+        $('body').find("#inputSidelinedistance").val(data.sidelineDistance);
+        $('body').find("#inputcourtRating").val(data.courtRating);
+        $('body').find("#inputCostperhour").val(data.costPerHour);
+        $('body').find("#inputCourttype").val(data.type);
+        $('body').find("#locandparkInstruction").val(data.locationAndParkingInstructions);
+        $('body').find("#inputfloorRate").val(data.floorRating);
+        $('body').find("#editcourt_id").val(data._id);
+        $('body').find(".extimgs").html('');
+        $('body').find(".courtsimgs").html('');
+        $('body').find(".gymimgs").html('');
+        let extimges = divimagesHtml(data.exteriorPhotos, 'e');
+        prevImages.exteriorPhotos = data.exteriorPhotos
+        let courtsimgs = divimagesHtml(data.courtFloorPhotos, 'f');
+        prevImages.courtFloorPhotos = data.courtFloorPhotos;
+        let gymimgs = divimagesHtml(data.gymPhotos, 'g');
+        prevImages.gymPhotos = data.gymPhotos;
+        // let extimges = divimagesHtml(data.exteriorPhotos);
+        // let courtsimgs = divimagesHtml(data.courtFloorPhotos);
+        // let gymimgs = divimagesHtml(data.gymPhotos);
+        $('body').find(".extimgs").html(extimges);
+        $('body').find(".courtsimgs").html(courtsimgs);
+        $('body').find(".gymimgs").html(gymimgs);
+        // toggleAddToUpdate
+        document.querySelector("#toggleAddToUpdate").setAttribute("onclick", 'updateCourts()')
+        // $('body').find(".editcourtbtn").html("");
+        // $('body').find(".editcourtbtn").html("<button onclick='updateCourts()' class='btn btn-primary'><i class='fa-solid fa-check'></i>Done</button>");
+        $('#courtForm').modal('toggle')
+
+        // return data.data
+    }
+
+    const updateCourts = async () => {
+        document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+
+        let validateData = validateCourtInformation()
+        if (!validateData.status)
+            return alert("Invalid data!")
+        let courtImage = await uploadCourtImages()
+        const dataToSend = { ...validateData.data, ...courtImage }
+        let resData = await fetch(`${location.origin}/court/update`, {
+            method: "post", headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(dataToSend)
+        }).then((res) => {
+            if (res.status === 200) {
+                return res.json()
+            }
+            return Promise.reject(res);
+        }).then((data) => {
+            let i = 0;
+            totalCourts.map((c) => {
+                if (c._id == dataToSend.court_id) {
+                    // details.splice(i,1,{name:"amit2",age:23})
+                    totalCourts.splice(i, 1, data.data);
+                }
+                i++;
+            });
+            clearUpdateFormData()
+            frontendChange();
+            document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+
+            Swal.fire({
+                icon: 'success',
+                title: data.statusMessage,
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                $('#courtForm').modal('toggle')
+            })
+            return data.data
+        }).catch((err) => {
+            document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+            err.json().then((nextErr) => {
+                Swal.fire({
+                    position: 'middle-center',
+                    icon: 'error',
+                    title: nextErr.statusMessage,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+        })
+    }
+
+
+
+    let divimagesHtml = (images, type) => {
+        let str = ``;
+        images.map((img) => {
+            let html = `<div id='${img}' class="image-container"><img src="https://ballerapp.s3.us-east-2.amazonaws.com/${img}" class="rounded" width="100" height="100"><div class="alignment-close-button"><div  onclick="delImg('${img}','${type}')" class="overlay"><span class="colose-icon-style">X</span></div></div></div>`
+            str = str + html;
+
+        })
+        return str;
+    }
+
+    const delImg = (imgId, type) => {
+        var element = document.getElementById(imgId);
+        element.parentNode.removeChild(element);
+        switch (type) {
+            case 'e':
+                prevImages.exteriorPhotos = prevImages.exteriorPhotos.filter((f) => f != imgId)
+                break;
+            case 'f':
+                prevImages.courtFloorPhotos = prevImages.courtFloorPhotos.filter((f) => f != imgId)
+                break;
+            case 'g':
+                prevImages.gymPhotos = prevImages.gymPhotos.filter((f) => f != imgId)
+                break;
+            default:
+                break;
+        }
+    }
+
+    const clearUpdateFormData = () => {
+        document.querySelector("#toggleAddToUpdate").setAttribute("onclick", 'addCourt()')
+        $('#courtForm').trigger("reset");
+        $('body').find(".extimgs").html('');
+        $('body').find(".courtsimgs").html('');
+        $('body').find(".gymimgs").html('');
+        $("#gymPhotos").val(null);
+        $("#courtFloorPhotos").val(null);
+        $("#exteriorPhotos").val(null);
+        images.courtFloorPhotos = [];
+        images.exteriorPhotos = [];
+        images.gymPhotos = [];
+        clearFileSelectedMessage()
+        // file-message
+    }
+
+    const clearFileSelectedMessage = () => {
+        document.querySelectorAll('.file-message').forEach((e) => {
+            e.innerHTML = 'Drop File here or click to upload'
+        })
+    }
+
+
+
+
+</script>

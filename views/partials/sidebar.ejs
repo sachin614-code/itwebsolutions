@@ -1,0 +1,85 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="/dashboard" class="brand-link">
+    <img src="../../dist/img/baller.svg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      style="opacity: .8">
+    <span class="brand-text font-weight-light">Total<small>-</small>Hoop</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <a href="/profile/<%-profile._id%>">
+
+        <div class="image" style="cursor:pointer;">
+          <%if(typeof(profile.profileImage)!='undefined'){%>
+            <img style=" display: inline-block;
+          width:35px;
+          height:35px;
+          border-radius: 50%;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;" src='https://ballerapp.s3.us-east-2.amazonaws.com/<%-profile.profileImage%>'
+              class="img-circle elevation-2 " alt=" <%-profile.firstName%>" />
+            <%}else{%>
+              <div class="image" style="cursor:pointer;">
+                <img style=" display: inline-block;
+                width:35px;
+                height:35px;
+                border-radius: 50%;
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+                fill: #fff;" src="../../dist/img/user_secret.svg" class="img-circle elevation-2"
+                  alt="<%-profile.firstName%>">
+              </div>
+              <%}%>
+        </div>
+      </a>
+      <div class="info">
+        <b style="color:white;">
+          <%-profile.firstName%>
+            <%-profile.lastName%>
+        </b>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item">
+          <a href="/dashboard" class="nav-link <%= currentUrl &&  currentUrl == 'Dashboard' ? 'active' : '' %>">
+            <i class="fa-solid fa-gauge"></i>
+            <p>
+              Dashboard
+
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/getUsers" class="nav-link <%= currentUrl &&  currentUrl == 'Users' ? 'active' : '' %>">
+            <i class="fa-solid fa-users-line"></i>
+            <p>
+              Users
+
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/venues" class="nav-link <%= currentUrl &&  currentUrl == 'Venues' ? 'active' : '' %>">
+            <i class="fa-sharp fa-solid fa-building-columns"></i>
+            <p>
+              Venues
+            </p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+</div>

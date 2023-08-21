@@ -1,0 +1,117 @@
+<div class="card">
+  <div class="card-body">
+  <!-- form start -->
+  <form action="/admin/saveschool" id="schoolsave" method="post">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="schoolname">Name</label>
+        <input type="text" class="form-control" id="schoolname" name="schoolname" placeholder="Name of School">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+      </div>  
+      <div class="form-group">
+        <label for="street">Street</label>
+        <input type="text" class="form-control" id="street" name="street" placeholder="Street">
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" name="city" placeholder="City">
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+        <input type="text" class="form-control" id="state" name="state" placeholder="State">
+      </div>
+      <div class="form-group">
+        <label for="zip">Zipcode</label>
+        <input type="text" class="form-control" id="zip" name="zip" placeholder="Zipcode">
+      </div>
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" class="form-control" id="country" name="country" placeholder="Country">
+      </div>
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+  </div>
+</div>  
+  
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Schools Listing</h3>
+  </div>
+  <div class="text-center" style="color: green;">
+    <strong><%= messages.success %></strong>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table id="example1" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Active</th>
+        <th>Deactive</th>
+      </tr>
+      </thead>
+        <tbody>
+          <% schools.forEach(el =>{ %>
+            <tr>
+              <td><%= el.first_name %></td>
+              <td><%= el.email %></td>
+              <% if (el.Address) { %>
+              <td><%= el.Address.street+" "+el.Address.city+" "+el.Address.state+" "+el.Address.zip+" "+el.Address.state+" "+el.Address.country %></td>
+              <% }else{ %>
+                <td> <p>N/A</p></td> 
+              <% } %>
+              <td><a href="/admin/activateSchool/<%= el.id %>">
+                <button <% if (el.is_active == 1) { %> disabled <% } %> class="btn btn-success" > </button></a></td>
+              <td><a href="/admin/deactivateSchool/<%= el.id %>">
+                <button <% if (el.is_active == 0) { %> disabled <% } %> class="btn btn-danger" > </button></a></td>
+            </tr> 
+          <% }) %> 
+      </tbody>
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>
+<script> 
+$('#schoolsave').validate({
+      rules: {
+        email: {
+          required: true,
+          email: true,
+        },
+        schoolname: {
+          required: true
+        },
+        street: {
+          required: true
+        },
+        city: {
+          required: true
+        },
+        state: {
+          required: true
+        },
+        zip: {
+          required: true
+        },
+        country: {
+          required: true
+        },
+      },
+      messages: {
+        email: {
+          required: "Please enter a email address",
+          email: "Please enter a vaild email address"
+        }
+      },
+    });  
+</script>

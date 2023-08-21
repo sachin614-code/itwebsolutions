@@ -1,0 +1,49 @@
+{
+  "name": "superAdmin",
+  "version": "1.0.0",
+  "description": "## Usage 1. Clone the repository with git clone command. 2. Copy ```.env.example``` file to ```.env```. 3. Run the ```npm i``` command if environment is ```local```.    In ```production``` run command ```npm i --production``` 4. Run ```npm i -g nodemon``` to install nodemon globally. 5. Then run ```npm run start:dev``` to run the project locally with nodemon 6. Check API documentation on ```http://localhost:3000/api-docs```",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "start:dev": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KapilKumar88/Express-REST-API-Skeleton.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KapilKumar88/Express-REST-API-Skeleton/issues"
+  },
+  "homepage": "https://github.com/KapilKumar88/Express-REST-API-Skeleton#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1227.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.2",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-fileupload": "^1.4.0",
+    "express-session": "^1.17.3",
+    "http-errors": "^2.0.0",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.4",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.7.8",
+    "nodemon": "^2.0.19",
+    "swagger-ui-express": "^4.5.0",
+    "uuid": "^9.0.0",
+    "winston": "^3.8.1",
+    "winston-daily-rotate-file": "^4.7.1",
+    "yamljs": "^0.3.0"
+  }
+}

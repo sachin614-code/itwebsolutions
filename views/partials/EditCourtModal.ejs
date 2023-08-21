@@ -1,0 +1,474 @@
+<style>
+    .file-drop-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 24px 10px;
+        gap: 10px;
+
+        width: 468px;
+        height: 106px;
+
+        background: rgba(1, 119, 193, 0.1);
+        border-radius: 8px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+
+    }
+
+    .choose-file-button {
+        /* flex-shrink: 0;
+        background-color: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        padding: 8px 15px;
+        margin-right: 10px;
+        font-size: 12px; */
+        text-transform: uppercase;
+    }
+
+    .file-message {
+        font-size: small;
+        font-weight: 300;
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .file-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+        opacity: 0;
+
+    }
+
+    .mt-100 {
+        margin-top: 100px;
+    }
+
+    .extimgs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: auto;
+    }
+</style>
+
+
+<form class="modal fade" id="courtForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="min-width:65%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">ABC Venue</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-6" style="padding:2%; border:1px solid #E1E2E9;">
+
+                        <b class="card-title">Details</b><br />
+                        <hr />
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputcourtName">Court Name</label>
+                                <input type="text" name="courtName" class="form-control" id="inputcourtName"
+                                    placeholder="Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Number of Courts in Gym</label>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-left-minus btn btn-secondary btn-number"
+                                            data-type="minus" data-field="">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" name="numberOfGyms" id="quantity" name="quantity"
+                                        class="form-control input-number" value="1" min="1" max="100">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-right-plus btn btn-secondary btn-number"
+                                            data-type="plus" data-field="">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputfloor">Floor Material</label>
+                                <input type="text" name="floorMaterial" class="form-control" id="inputfloor">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputfloorRate">Floor Rating</label>
+                                <input name="floorRating" type="text" class="form-control" id="inputfloorRate">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputCostperhour">Cost Per Hour</label>
+                                <input name="costPerHour" type="number" class="form-control" id="inputCostperhour">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputRowSeats">Rows of Seating</label>
+                                <select name="seatingRows" id="inputRowSeats" class="form-control">
+
+                                    <option value="01-03" selected>01-03</option>
+                                    <option value="04-07">04-07</option>
+                                    <option value="08-11">08-11</option>
+                                    <option value="12-15">12-15</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputbaselinedistance">Baseline Distance</label>
+                                <select name="baselineDistance" id="inputbaselinedistance" class="form-control">
+                                    <option value="01-03" selected>01-03</option>
+                                    <option value="04-07">04-07</option>
+                                    <option value="08-11">08-11</option>
+                                    <option value="12-15">12-15</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputSidelinedistance">Sideline Distance</label>
+                                <select name="sidelineDistance" id="inputSidelinedistance" class="form-control">
+                                    <option value="01-03" selected>01-03</option>
+                                    <option value="04-07">04-07</option>
+                                    <option value="08-11">08-11</option>
+                                    <option value="12-15">12-15</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="court_id" id="editcourt_id" value="">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputcourtRating">Court Rating</label>
+                                <select name="courtRating" id="inputcourtRating" class="form-control">
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputCourttype">Court Type</label>
+                                <select name="type" id="inputCourttype" class="form-control">
+                                    <option selected value="Main">Main</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="locandparkInstruction">Location and parking instruction</label>
+                            <textarea name="locationAndParkingInstructions" class="form-control"
+                                id="locandparkInstruction" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="padding:2%; border:1px solid #E1E2E9;">
+                        <b class="card-title">Photos</b><br />
+                        <hr />
+
+                        <div class="row">
+
+                            <label for="exampleFormControlTextarea1">Exterior or Building</label>
+
+                            <div class="col-md-12 form-group">
+                                <div class="file-drop-area">
+                                    <span class="choose-file-button"><i class="fa-solid fa-upload"></i></span>
+                                    <span class="file-message">Drop File here or click to upload</span>
+                                    <input name="exteriorPhotos" onchange="photoUpload('exteriorPhotos')"
+                                        id="exteriorPhotos" class="file-input photoUpload" type="file" multiple>
+                                </div>
+                            </div>
+                            <section>
+                                <aside class="photos-alignment-dropzone mt-2 ml-2 mr-2 extimgs">
+
+                                </aside>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <label for="exampleFormControlTextarea1">Court Floor</label>
+                            <div class="col-md-12 form-group">
+                                <div class="file-drop-area">
+                                    <span class="choose-file-button"><i class="fa-solid fa-upload"></i></span>
+                                    <span class="file-message">Drop File here or click to upload</span>
+                                    <input name="courtFloorPhotos" onchange="photoUpload('courtFloorPhotos')"
+                                        class="file-input photoUpload" id="courtFloorPhotos" type="file" multiple>
+                                </div>
+                            </div>
+                            <section>
+                                <aside class="photos-alignment-dropzone mt-2 ml-2 mr-2 courtsimgs">
+
+                                </aside>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <label for="exampleFormControlTextarea1">Gym</label>
+                            <div class="col-md-12 form-group">
+                                <div class="file-drop-area">
+                                    <span class="choose-file-button"><i class="fa-solid fa-upload"></i></span>
+                                    <span class="file-message">Drop File here or click to upload</span>
+                                    <input name="gymPhotos" onchange="photoUpload('gymPhotos')" id="gymPhotos"
+                                        class="file-input photoUpload" type="file" multiple>
+                                </div>
+
+                            </div>
+                            <section>
+                                <aside class="photos-alignment-dropzone mt-2 ml-2 mr-2 gymimgs">
+
+                                </aside>
+                            </section>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div style="display:flex;justify-content:space-between;width:100%;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close"><i
+                            class="fa-solid fa-arrow-left"></i>Back</button>
+                    <button onclick="updateCourts()" class="btn btn-primary"><i class="fa-solid fa-check"></i>Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+<script>
+    let totalCourts = [];
+
+    let prevImages = {
+        exteriorPhotos: [],
+        courtFloorPhotos: [],
+        gymPhotos: []
+    }
+
+    let images = {
+        gymPhotos: [],
+        courtFloorPhotos: [],
+        exteriorPhotos: []
+    }
+
+    function photoUpload(id) {
+        let images = document.getElementById(id)
+    }
+
+
+
+    document.querySelector("#courtForm").addEventListener("submit", ((e) => {
+        e.preventDefault();
+    }))
+
+    const setDefault = () => {
+        document.querySelector("#courtForm").addEventListener("submit", ((e) => {
+            e.preventDefault();
+        }))
+    }
+
+    const updateCourts = async () => {
+        document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+        let validateData = validateCourtInformation()
+        if (!validateData.status)
+            return alert("Invalid data!")
+        let courtImage = await uploadCourtImages()
+        const dataToSend = { ...validateData.data, ...courtImage }
+        let resData = await fetch(`${location.origin}/court/update`, {
+            method: "post", headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(dataToSend)
+        }).then((res) => {
+            if (res.status === 200) {
+                return res.json()
+            }
+            return Promise.reject(res);
+        }).then((data) => {
+
+            $('body').find(".cls_" + data.data._id + " .courtname").text(data.data.courtName);
+            $('body').find(".cls_" + data.data._id + " .floorrate").text(data.data.floorrate);
+            $('body').find(".cls_" + data.data._id + " .floorMaterial").text(data.data.floorMaterial);
+            $('body').find(".cls_" + data.data._id + " .courtRating").text(data.data.courtRating);
+            $('body').find(".cls_" + data.data._id + " .costperhrs").text(data.data.costPerHour);
+
+            document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+
+            Swal.fire({
+                icon: 'success',
+                title: data.statusMessage,
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                $('#courtForm').modal('toggle');
+                location.reload();
+            })
+            return data.data
+        }).catch((err) => {
+            err.json().then((nextErr) => {
+                Swal.fire({
+                    position: 'middle-center',
+                    icon: 'error',
+                    title: nextErr.statusMessage,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+        })
+    }
+    const uploadCourtImages = async () => {
+        let uploadedImages = {};
+        for (const property in images) {
+            if (images[property].length)
+                uploadedImages[property] = await uploadImage(images[property])
+        }
+        for (const property in prevImages) {
+            if (prevImages[property].length)
+                uploadedImages[property] = [...uploadedImages[property] ? uploadedImages[property] : '', ...prevImages[property]]
+        }
+        return uploadedImages
+    }
+    const uploadImage = async (imgArray) => {
+        const data = new FormData();
+        for (const file of imgArray) {
+            data.append("file", file)
+        }
+        data.append("type", "image")
+
+        let resData = await fetch(`${location.origin}/upload/multiple`, {
+            method: "post", body: data
+        }).then((res) => res.json()).then((res) => res.data.data).catch((err) => { })
+        return resData
+    }
+
+    const validateCourtInformation = () => {
+        const data = $('#courtForm').serializeArray().reduce(function (obj, item) {
+            obj[item.name] = item.value;
+            return obj;
+        }, {});
+
+        return { status: true, data }
+
+    }
+
+    $(document).on('change', '.file-input', function () {
+        clearPrintendImage(this.name)
+
+        var filesCount = $(this)[0].files.length;
+        images[this.name] = this.files
+
+        var textbox = $(this).prev();
+
+        if (filesCount === 1) {
+            var fileName = $(this).val().split('\\').pop();
+            textbox.text(fileName);
+        } else {
+            textbox.text(filesCount + ' files selected');
+        }
+        showLocalImages(this.name)
+
+
+
+    });
+
+    const showLocalImages = async (properties) => {
+        if (images[properties].length) {
+            for (let file of images[properties]) {
+                let reader = new FileReader();
+                reader.onload = function () {
+                    let imgHTML = localDivImagesHtml(reader.result, properties, `${file.name}`)
+                    switch (properties) {
+                        case 'exteriorPhotos':
+                            document.querySelector(".extimgs").innerHTML += imgHTML
+                            break;
+                        case 'courtFloorPhotos':
+                            document.querySelector(".courtsimgs").innerHTML += imgHTML
+                            break;
+                        case 'gymPhotos':
+                            document.querySelector(".gymimgs").innerHTML += imgHTML
+                            break;
+                    }
+
+
+
+                }
+                reader.readAsDataURL(file)
+            }
+        }
+    }
+
+    let localDivImagesHtml = (src, type, id) => {
+        return `<div id='${id}' class="image-container"><img src="${src}" class="rounded" width="100" height="100"><div class="alignment-close-button"><div  onclick="delLocalImg('${src}','${type}','${id}')" class="overlay"><span class="colose-icon-style">X</span></div></div></div>`
+    }
+
+    const delLocalImg = (src, type, id) => {
+        var element = document.getElementById(id);
+        element.parentNode.removeChild(element);
+        images[type] = [...images[type]].filter((f) => f.name != id)
+    }
+
+    const clearPrintendImage = (properties) => {
+        if (images[properties].length) {
+            for (let file of images[properties]) {
+                var element = document.getElementById(file.name);
+                element.parentNode.removeChild(element);
+            }
+        }
+    }
+
+
+
+    $(document).ready(function () {
+
+        var quantitiy = 0;
+        $('.quantity-right-plus').click(function (e) {
+
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+
+            // If is not undefined
+
+            $('#quantity').val(quantity + 1);
+
+
+            // Increment
+
+        });
+
+        $('.quantity-left-minus').click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+
+            // If is not undefined
+
+            // Increment
+            if (quantity > 0) {
+                $('#quantity').val(quantity - 1);
+            }
+        });
+
+    });
+
+
+
+</script>

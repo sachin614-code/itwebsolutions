@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("./partials/head") %>
+        <title>Total Hoop | Venues Form</title>
+        <style>
+            .hrdivider {
+                position: relative;
+                margin-top: 35px;
+                margin-bottom: 35px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .hrdivider span {
+                position: absolute;
+                top: -15px;
+                background: #fff;
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+            .hide {
+                display: none;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include("./partials/navbar")%>
+        <%- include("./partials/sidebar")%>
+            <%- include("./partials/Loader")%>
+                <div class="content-wrapper">
+                    <!-- Content Header (Page header) -->
+                    <section class="content-header">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-default">
+                                        <div class="card-header">
+                                            <h2 class="card-title">New Venue</h2>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="bs-stepper">
+                                                <div class="bs-stepper-header" role="tablist">
+                                                    <!-- your steps here -->
+                                                    <div class="step" data-target="#logins-part">
+                                                        <button type="button" class="step-trigger" role="tab"
+                                                            aria-controls="logins-part" id="logins-part-trigger">
+                                                            <span class="bs-stepper-circle">1</span>
+                                                            <span class="bs-stepper-label">General Information</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="line"></div>
+                                                    <div class="step" data-target="#information-part">
+                                                        <button type="button" class="step-trigger" role="tab"
+                                                            aria-controls="information-part"
+                                                            id="information-part-trigger">
+                                                            <span class="bs-stepper-circle">2</span>
+                                                            <span class="bs-stepper-label">Courts</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="bs-stepper-content">
+                                                    <!-- your steps content here -->
+                                                    <form id="venueForm">
+
+                                                        <div id="logins-part" class="content" role="tabpanel"
+                                                            aria-labelledby="logins-part-trigger">
+                                                            <div class="hrdivider">
+                                                                <hr />
+                                                                <span>General Information</span>
+                                                            </div>
+                                                            <div style="display:flex;justify-content:space-around;">
+                                                                <div style="width:47%;">
+                                                                    <div class="form-group">
+                                                                        <label for="inputAddress2">Venue Name</label>
+                                                                        <input required type="text" name="venueName"
+                                                                            class="form-control" id="inputAddress2"
+                                                                            placeholder="Venue Name">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="inputAddress2">Address</label>
+                                                                        <input required type="text" name="address"
+                                                                            class="form-control" id="inputAddress2"
+                                                                            placeholder="Apartment, studio, or floor">
+                                                                    </div>
+
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputEmail4">City</label>
+                                                                            <input required type="text" name="city"
+                                                                                class="form-control" id="inputEmail4"
+                                                                                placeholder="City">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">State</label>
+                                                                            <input required type="text" name="state"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                placeholder="State">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Zip</label>
+                                                                            <input required type="text" name="zipCode"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                placeholder="Zip">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="inputAddress">Venue Notes</label>
+                                                                        <input required type="text" name="venueNotes"
+                                                                            class="form-control" id="inputAddress"
+                                                                            placeholder="Venue Notes">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Manager Information -->
+
+                                                            <div class="hrdivider">
+                                                                <hr />
+                                                                <span>Manager</span>
+                                                            </div>
+                                                            <div style="display:flex;justify-content:space-around;">
+                                                                <div style="width:47%;">
+
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputEmail4">Name</label>
+                                                                            <input required type="text" name="mName"
+                                                                                class="form-control" id="inputEmail4"
+                                                                                placeholder="Name">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Email</label>
+                                                                            <input required type="email" name="mEmail"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                placeholder="Email">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Mobile</label>
+                                                                            <input required type="text"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                name="mMobile" placeholder="Mobile">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Payment Information -->
+
+                                                            <div class="hrdivider">
+                                                                <hr />
+                                                                <span>Payment Manager</span>
+                                                            </div>
+
+                                                            <div style="display:flex;justify-content:space-around;">
+                                                                <div style="width:47%;">
+
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputEmail4">Name</label>
+                                                                            <input required type="text"
+                                                                                class="form-control" id="inputEmail4"
+                                                                                name="pmName" placeholder="Name">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Email</label>
+                                                                            <input required type="email"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                name="pmEmail" placeholder="Email">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Mobile</label>
+                                                                            <input required type="text"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                name="pmMobile" placeholder="Mobile">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Schedule Manager Information -->
+
+                                                            <div class="hrdivider">
+                                                                <hr />
+                                                                <span>Schedule Manager</span>
+                                                            </div>
+
+                                                            <div style="display:flex;justify-content:space-around;">
+                                                                <div style="width:47%;">
+
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputEmail4">Name</label>
+                                                                            <input required type="text"
+                                                                                class="form-control" id="inputEmail4"
+                                                                                name="smName" placeholder="Name">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Email</label>
+                                                                            <input required type="email"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                name="smEmail" placeholder="Email">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Mobile</label>
+                                                                            <input required type="text"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                name="smMobile" placeholder="Mobile">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--Facilities Manager Information -->
+
+                                                            <div class="hrdivider">
+                                                                <hr />
+                                                                <span>Facilities Manager</span>
+                                                            </div>
+                                                            <div style="display:flex;justify-content:space-around;">
+                                                                <div style="width:47%;">
+
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputEmail4">Name</label>
+                                                                            <input required type="text"
+                                                                                class="form-control" id="inputEmail4"
+                                                                                name="fmName" placeholder="Name">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Email</label>
+                                                                            <input required type="email"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                name="fmEmail" placeholder="Email">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label for="inputPassword4">Mobile</label>
+                                                                            <input required type="text"
+                                                                                class="form-control" id="inputPassword4"
+                                                                                name="fmMobile" placeholder="Mobile">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div style="text-align:right;">
+                                                                <!-- venueForm -->
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="nextStep()">Continue
+                                                                    <i class="fa-solid fa-arrow-right"></i></button>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div id="information-part" class="content" role="tabpanel"
+                                                            aria-labelledby="information-part-trigger">
+                                                            <div class="" id="addCourtButtonContainer">
+                                                                <div
+                                                                    style="min-height:500px;display:flex;align-items:center;justify-content:space-around">
+                                                                    <button onclick="setDefault()" type="button"
+                                                                        style="width:30%;height:20%;"
+                                                                        class="btn btn-outline-primary"
+                                                                        data-toggle="modal" data-target="#courtForm"><i
+                                                                            class="fa-solid fa-plus"></i> Add
+                                                                        Court</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="courtListContainer hide" id="courtListContainer"
+                                                                style="min-height:500px;">
+                                                                <!-- Main content -->
+                                                                <div class="container-fluid ">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">ABC Venue
+                                                                                        Court
+                                                                                    </h3>
+                                                                                </div>
+                                                                                <!-- /.card-header -->
+                                                                                <div class="card-body">
+                                                                                    <table id="example2"
+                                                                                        class="table table-bordered table-hover">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th>COURTS</th>
+                                                                                                <th>ROWS OF SEATING</th>
+                                                                                                <th> COURT RATING</th>
+                                                                                                <th> FLOOR MATERIAL</th>
+                                                                                                <th> BASELINE DIST</th>
+                                                                                                <th> SIDELINE DIST</th>
+                                                                                                <th> PHOTOS</th>
+                                                                                                <th>ACTION</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody id="tBody">
+                                                                                        </tbody>
+
+                                                                                        </tfoot>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="card-body">
+                                                                                    <button onclick="setDefault()"
+                                                                                        type="button"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#courtForm"
+                                                                                        class="btn btn-outline-primary"><i
+                                                                                            class="fa-solid fa-plus"></i>
+                                                                                        Add
+                                                                                        Court</button>
+                                                                                </div>
+                                                                                <!-- /.card-body -->
+                                                                            </div>
+                                                                            <!-- /.card -->
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div style="display:flex;justify-content:space-between">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    onclick="stepper.previous()"><i
+                                                                        class="fa-solid fa-arrow-left"></i>Back</button>
+                                                                <button type="submit" class="btn btn-primary"><i
+                                                                        class="fa-solid fa-check"></i>Done </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <!-- <div class="card-footer">
+                                        Visit <a href="https://github.com/Johann-S/bs-stepper/#how-to-use-it">bs-stepper
+                                            documentation</a> for more examples and information about the
+                                        plugin.
+                                    </div> -->
+                                    </div>
+                                    <!-- /.card -->
+                                    <!-- Modal For Add Courts -->
+
+
+                                    <%- include("./partials/AddCourtModal")%>
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+
+</body>
+<%- include("./partials/script")%>
+
+
+    <script>
+        $(function () {
+
+            // $("#example2").DataTable({
+            //     responsive: true,
+            //     lengthChange: false,
+            //     autoWidth: false,
+            //     order: [],
+            //     // buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            // })
+            //     .buttons()
+            //     .container()
+            //     .appendTo("#example1_wrapper  .col-md-6:eq(0)");
+
+            $("#example2").DataTable({
+                paging: true,
+                lengthChange: false,
+                searching: false,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                responsive: true,
+            });
+        });
+        document.querySelector("form").addEventListener("submit", ((e) => {
+            e.preventDefault()
+        }))
+        var stepper = new Stepper($('.bs-stepper')[0])
+        document.querySelector("#venueForm").addEventListener("submit", ((e) => {
+            // alert("form submit")
+            document.querySelector("#spinnerId").classList.toggle("spinnerOff");
+            e.preventDefault()
+            const data = $('#venueForm').serializeArray().reduce(function (obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            let manager = {}
+            let paymentManager = {}
+            let facilityManager = {}
+            let scheduleManager = {}
+            let venueAddress = {}
+
+            if (data.mName) manager.name = data.mName
+            if (data.mEmail) manager.email = data.mEmail
+            if (data.mMobile) manager.phone = data.mMobile
+            if (data.fmName) facilityManager.name = data.fmName
+            if (data.fmEmail) facilityManager.email = data.fmEmail
+            if (data.fmMobile) facilityManager.phone = data.fmMobile
+            if (data.pmName) paymentManager.name = data.pmName
+            if (data.pmEmail) paymentManager.email = data.pmEmail
+            if (data.pmMobile) paymentManager.phone = data.pmMobile
+            if (data.smName) scheduleManager.name = data.smName
+            if (data.smEmail) scheduleManager.email = data.smEmail
+            if (data.smMobile) scheduleManager.phone = data.smMobile
+            if (data.address) venueAddress.address = data.address
+            if (data.city) venueAddress.city = data.city
+            if (data.state) venueAddress.state = data.state
+            if (data.zipCode) venueAddress.zipCode = data.zipCode
+            const { venueName, venueNotes } = data
+
+            let courtId = []
+            totalCourts.map((cid) => { courtId.push(cid._id) })
+
+            const venueData = { venueName, venueNotes, venueAddress, manager, paymentManager, facilityManager, scheduleManager, courtId }
+            fetch(`${location.origin}/venues/add`, {
+                method: "post", headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                }, body: JSON.stringify(venueData)
+            }).then((res) => {
+                if (res.status === 200)
+                    return res.json()
+                return Promise.reject(res);
+            }).then((res) => {
+                document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+                Swal.fire({
+                    position: 'middle-center',
+                    icon: 'success',
+                    title: res.statusMessage,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    location.href = '/venues'
+
+                })
+            }).catch((err) => {
+                document.querySelector("#spinnerId").classList.toggle("spinnerOff")
+                err.json().then((nextErr) => {
+
+                    Swal.fire({
+                        position: 'middle-center',
+                        icon: 'error',
+                        title: nextErr.statusMessage,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+            })
+        }))
+
+        const nextStep = () => {
+            const isValidData = validateVenueInformation()
+            if (!isValidData.status)
+                return Swal.fire({
+                    position: 'middle-center',
+                    icon: 'error',
+                    title: isValidData.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            return stepper.next()
+        }
+
+
+        const validateVenueInformation = () => {
+            const data = $('#venueForm').serializeArray().reduce(function (obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            if (!data.mName || !data.mEmail || !data.mMobile || !data.fmName || !data.fmEmail || !data.fmMobile || !data.pmName || !data.pmEmail || !data.pmEmail || !data.pmMobile || !data.smName || !data.smEmail || !data.smMobile || !data.address || !data.city || !data.state || !data.zipCode || !data.venueName || !data.venueNotes) return { status: false, msg: "All fields are required" }
+
+            return { status: true }
+        }
+
+
+
+    </script>
+
+</html>

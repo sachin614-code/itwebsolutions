@@ -1,0 +1,6 @@
+label.error {
+    color: red !important
+}
+input.error {
+    border-color: red;
+}

@@ -1,0 +1,44 @@
+<style>
+    #spinner {
+
+        animation: spin 1s linear infinite;
+        color: rgba(255, 0, 0, 0.874);
+    }
+
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .center {
+        flex: left;
+    }
+
+    .spinner i {
+        margin-top: 10px;
+        margin-left: 50px;
+
+
+    }
+
+    .inline {
+        z-index: 40000000000;
+        min-height: 100vh;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.326);
+    }
+
+    .spinnerOff {
+        display: none;
+    }
+</style>
+<div class="inline spinnerOff" id="spinnerId">
+    <div class="center">
+        <p class="spinner" id="spinner"><i class="fa fa-spinner fa-5x"></i></p>
+    </div>
+</div>

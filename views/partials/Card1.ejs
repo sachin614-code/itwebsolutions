@@ -1,0 +1,68 @@
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Super Admin</h1>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <section class="content">
+      <div class="container-fluid">
+    <div class="row">
+      <% let widgetBg = ["bg-warning", "bg-success","bg-info", "bg-danger"]; %>
+      <%statData.map((s)=>{%>
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <%if(s.tittle=='Events'||s.tittle=='Venues'){%>
+              <div class="info-box mb-3 <%= widgetBg[Math.floor(Math.random() * widgetBg.length)];%>">
+                <span class="info-box-icon">
+                  <%if(s.tittle=='Events'){%><i class="fa-solid fa-calendar-days"></i>
+                  <%}%>
+                  <%if(s.tittle=='Venues'){%><i class="fa-solid fa-venus"></i>
+                  <%}%></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text"><%-s.tittle%></span>
+                  <span class="info-box-number"><%-s.count%></span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+            
+            <%}else{%>
+              <div class="small-box <%= widgetBg[Math.floor(Math.random() * widgetBg.length)]; %>">
+                <div class="inner">
+                  <h3><%-s.count%></h3>
+  
+                  <p><%-s.tittle%></p>
+                </div>
+                <div class="icon">
+                  <i class="fa-solid fa-user-secret"></i>
+                </div>
+                <a href="/getUsers?role=<%-s.role%>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+              <%}%>
+        </div>
+        <%})%>
+        
+      </div>
+      </div></section>
+      
+      
+    <!-- /.row -->
+  </div>
+  </div>

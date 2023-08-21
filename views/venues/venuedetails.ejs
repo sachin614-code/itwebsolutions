@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/head") %>
+
+    <title>Total Hoop | <%=currentUrl%>
+    </title>
+</head>
+<style>
+  .avatar.xl {
+    width: 5rem;
+    height: 5rem;
+    font-size: 1.09375rem;
+  }
+
+  .image-container {
+    margin-bottom: 5px !important;
+    margin-right: 5px !important;
+    position: relative;
+  }
+
+  .rounded {
+    border-radius: var(--bs-border-radius) !important;
+
+  }
+
+  .photos-alignment-dropzone {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 89vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .alignment-close-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .image-container .overlay {
+    align-items: center;
+    background: #007aff;
+    border-radius: 50%;
+    box-shadow: 0 7px 29px 0 hsla(240, 5%, 41%, .2);
+    cursor: pointer;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    padding: 4px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 30px;
+  }
+
+  .colose-icon-style {
+    color: #fff;
+  }
+</style>
+
+<body>
+  <%- include("../partials/navbar")%>
+    <%- include("../partials/sidebar")%>
+
+      <%- include("../partials/Loader")%>
+
+        <% const camel2title=(camelCase)=> camelCase
+          .replace(/([A-Z])/g, (match) => ` ${match}`)
+          .replace(/^./, (match) => match.toUpperCase())
+          .trim();
+          %>
+
+          <div class="content-wrapper">
+            <div class="container d-flex flex-column  align-items-center">
+              <div class="container" style="background-color: #fff;margin: 1.5%;">
+                <div class="row mb-1">
+                  <div class="col-12 d-flex align-items-center ps-0">
+                    <i class="fs-3  d-block bi bi-chevron-left cursor me-2"></i>
+                    <h3 class="m-0">Venues</h3>
+                  </div>
+                </div>
+                <div class="row my-4 bg-body rounded venue-header" style="height: 110px;">
+                  <div class="col-md-6 d-flex justify-content-start align-items-center">
+                    <div><img src="https://development.dlvdkc2jsd6h5.amplifyapp.com/assets/media/avatars/01.jpg"
+                        class="avatar xl rounded-circle me-4" alt="" loading="lazy"></div>
+                    <div class="pt-3" style="margin: 0 0px 0px 7px;">
+                      <p class="h4">
+                        <%= getDetailsData.venueName %>
+                      </p>
+                      <p class="text-muted"></p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 d-flex align-items-center justify-content-end">
+                    <div class="text-end ">
+                      <p class=" mb-0 text-muted">Location</p>
+                      <p class=" mb-0"><strong>
+                          <%= (getDetailsData.fulladdress !='' ) ? getDetailsData.fulladdress : 'N/A' %>
+                        </strong></p>
+                      <p class=" py-1 mb-0 d-flex align-items-center"> <i
+                          class="d-block bi bi-calendar me-2 text-primary"></i><span class="mb-0 pb-0 text-primary"
+                          style="cursor: pointer;"><strong>View Availability</strong></span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container">
+                <p class="h4 mt-4 mb-3">Courts</p>
+                <div class="row d-flex flex-md-row justify-content-start align-items-center gy-3 h-100">
+                  <% if(getDetailsData.courtId.length !=0) { %>
+                    <% getDetailsData.courtId.map((ven)=>{ %>
+                      <div class="col-4 col-sm-12 px-2 col-md-4 border justify-content-center align-items-center p-0"
+                        style="min-height: 46%;">
+                        <div class="card court-card w-100 rounded h-100">
+                          <% let i=1; if(ven.courtFloorPhotos.length !=0){ ven.courtFloorPhotos.map( (imgs)=> {
+                            if(i == 1){
+                            %>
+                            <img src="https://ballerapp.s3.us-east-2.amazonaws.com/<%= imgs %>"
+                              class="card-img-top w-100" alt="" loading="lazy" height="170">
+                            <% i++; } }) }else{ %>
+
+                              <img src="https://ballerapp.s3.us-east-2.amazonaws.com/courtImages/1665129904277-al.png"
+                                class="card-img-top w-100" alt="" loading="lazy" height="170">
+                              <% } %>
+
+
+                                <div class="card-body px-3 pt-3 pb-0">
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <p class="mb-2 fw-bolder body-text-color">
+                                        <%=ven.courtName%>
+                                      </p>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                      <p class="mb-3 fw-bolder body-text-color costperhrs">$<%=(ven.costPerHour !='' )?
+                                          ven.costPerHour: 'N/A' %>
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="row  d-flex justify-content-center align-items-center">
+                                    <div class="col-md-4 col-4">
+                                      <p class="text-muted mb-1 secondary-text-font-small">Floor Type</p>
+                                      <p class="secondary-text-font-small fw-bolder mb-0">Main</p>
+                                    </div>
+                                    <div class="col-md-4 col-4">
+                                      <p class="text-muted mb-1 secondary-text-font-small">Floor Rating</p>
+                                      <p class="secondary-text-font-small fw-bolder mb-0 floorrate">
+                                        <%=(ven.floorRating !='' ) ? ven.floorRating: 'N/A' %>
+                                      </p>
+                                    </div>
+                                    <div class="col-md-4 col-4 " style="display: flex; justify-content: flex-end;">
+                                      <div>
+                                        <p class="text-muted text-end mb-1 secondary-text-font-small">Court Rating</p>
+                                        <p class="secondary-text-font-small fw-bolder mb-0 courtRating">
+                                          <%=(ven.courtRating !='' ) ? ven.courtRating: 'N/A' %>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <hr class="mb-0" style="border-width: 1px;">
+                                </div>
+                                <div class="row d-flex justify-content-center aligns-items-center">
+                                  <div
+                                    class="col-6 py-3 text-center d-flex justify-content-center aligns-items-center text-primary">
+                                    <i class="fs-6  d-block bi bi-calendar me-2 false"></i><span
+                                      class="pb-0 view-availablity-alignment-set"
+                                      style="cursor: pointer; font-size: 14px;"  onclick="getCourtDetails('<%=ven._id%>')">View Availability</span>
+                                  </div>
+                                  <div
+                                    class="col-6 py-3 border-start text-center d-flex justify-content-center aligns-items-center text-primary">
+                                    <i class="fs-6  d-block me-2 bi bi-pencil"></i><span class="pb-0 "
+                                      style="cursor: pointer; font-size: 14px;" onclick="editCourt('<%=ven._id%>')">Edit
+                                      Court</span>
+                                  </div>
+                                </div>
+                        </div>
+                      </div>
+
+                      <% }) %>
+
+                </div>
+
+                <% }else{ %>
+                  <h2>No Courts Found !</h2>
+                  <% } %>
+              </div>
+            </div>
+          </div>
+</body>
+<%- include("../partials/script")%>
+<%- include("../partials/EditCourtModal")%>
+<%- include("../partials/AvailabilityModal")%>
+    <script>
+      const editCourt = async (id) => {
+        let validateData = validateCourtInformation()
+        if (!validateData.status)
+          return alert("Invalid data!")
+        let courtImage = await uploadCourtImages()
+
+        let resData = await fetch(`${location.origin}/court/edit/` + id, {
+          method: "get", headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then((res) => {
+          if (res.status === 200) {
+            return res.json()
+          }
+          return Promise.reject(res);
+        }).then((data) => {
+
+          $('body').find("#inputcourtName").val(data.data.courtName);
+          $('body').find("#quantity").val(data.data.numberOfGyms);
+          $('body').find("#inputfloor").val(data.data.floorMaterial);
+          $('body').find("#inputRowSeats").val(data.data.seatingRows);
+          $('body').find("#inputbaselinedistance").val(data.data.baselineDistance);
+          $('body').find("#inputSidelinedistance").val(data.data.sidelineDistance);
+          $('body').find("#inputcourtRating").val(data.data.courtRating);
+          $('body').find("#inputCourttype").val(data.data.type);
+          $('body').find("#locandparkInstruction").val(data.data.locationAndParkingInstructions);
+          $('body').find("#inputfloorRate").val(data.data.floorRating);
+          $('body').find("#editcourt_id").val(data.data._id);
+          $('body').find("#inputCostperhour").val(data.data.costPerHour);
+          $('body').find(".extimgs").html('');
+          $('body').find(".courtsimgs").html('');
+          $('body').find(".gymimgs").html('');
+          let extimges = divimagesHtml(data.data.exteriorPhotos, 'e');
+          prevImages.exteriorPhotos = data.data.exteriorPhotos
+          let courtsimgs = divimagesHtml(data.data.courtFloorPhotos, 'f');
+          prevImages.courtFloorPhotos = data.data.courtFloorPhotos;
+          let gymimgs = divimagesHtml(data.data.gymPhotos, 'g');
+          prevImages.gymPhotos = data.data.gymPhotos;
+          $('body').find(".extimgs").html(extimges);
+          $('body').find(".courtsimgs").html(courtsimgs);
+          $('body').find(".gymimgs").html(gymimgs);
+
+          $('#courtForm').modal('toggle')
+
+          return data.data
+        }).catch((err) => {
+          err.json().then((nextErr) => {
+            Swal.fire({
+              position: 'middle-center',
+              icon: 'error',
+              title: nextErr.statusMessage,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+        })
+      }
+
+      let divimagesHtml = (images, type) => {
+        let str = ``;
+        images.map((img) => {
+          let html = `<div id='${img}' class="image-container"><img src="https://ballerapp.s3.us-east-2.amazonaws.com/${img}" class="rounded" width="100" height="100"><div class="alignment-close-button"><div  onclick="delImg('${img}','${type}')" class="overlay"><span class="colose-icon-style">X</span></div></div></div>`
+          str = str + html;
+
+        })
+        return str;
+      }
+      // https://ballerapp.s3.us-east-2.amazonaws.com/${img}
+      // <aside class="photos-alignment-dropzone mt-2 ml-2 mr-2"><div class="image-container"><img src="https://ballerapp.s3.us-east-2.amazonaws.com/courtImages/1665129903732-ad.png" class="rounded" width="100" height="100"><div class="alignment-close-button"><div class="overlay"><span class="colose-icon-style">X</span></div></div></div><div class="image-container"><img src="https://ballerapp.s3.us-east-2.amazonaws.com/courtImages/1665129903843-ae.png" class="rounded" width="100" height="100"><div class="alignment-close-button"><div class="overlay"><span class="colose-icon-style">X</span></div></div></div></aside>
+
+      const delImg = (imgId, type) => {
+        var element = document.getElementById(imgId);
+        element.parentNode.removeChild(element);
+        switch (type) {
+          case 'e':
+            prevImages.exteriorPhotos = prevImages.exteriorPhotos.filter((f) => f != imgId)
+            break;
+          case 'f':
+            prevImages.courtFloorPhotos = prevImages.courtFloorPhotos.filter((f) => f != imgId)
+            break;
+          case 'g':
+            prevImages.gymPhotos = prevImages.gymPhotos.filter((f) => f != imgId)
+            break;
+          default:
+            break;
+        }
+      }
+
+    </script>
+
+
+
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("./partials/head") %>
+        <title>Total Hoop | Courts</title>
+</head>
+
+<body>
+    <%- include("./partials/navbar")%>
+        <%- include("./partials/sidebar")%>
+            <div class="content-wrapper">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div
+                                    style="display:flex;align-items:center;justify-content:right;font-size:23px;padding:8px;">
+                                    <a href="/user/add"><i class="fa-solid fa-plus"
+                                            style="cursor:pointer;color:#5900ffc8;" title="Add Venue"></i></a>
+                                </div>
+                                <div class="card">
+                                    <!-- <div class="card-header">
+                                <div class="card-tittle col-sm-2"> </div>
+
+                            </div> -->
+                                    <div class="card-body">
+
+                                        <table id="example1" class="table table-bordered table-striped">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>Court Name</th>
+                                                    <th>Manager Name</th>
+                                                    <th>Schedule Manager</th>
+                                                    <th>Payment Manager</th>
+                                                    <th>Facility Manager</th>
+                                                    <th>State</th>
+                                                    <th>City</th>
+                                                    <th>Zipcode</th>
+                                                    <th>Days</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+</body>
+
+</html>

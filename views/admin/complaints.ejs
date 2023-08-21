@@ -1,0 +1,44 @@
+<%//JSON.stringify(data)%>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Schools Listing</h3>
+  </div>
+  <div class="text-center" style="color: green;">
+    <strong><%= messages.success %></strong>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table id="example1" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Description</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      
+        <%for(var i=0; i<data.length; i++){%>
+          <tbody>
+            <td><%=data[i].first_name%> <%=data[i].last_name%></td>
+            <td><%=data[i].email%></td>
+            <td><%=data[i].phone%></td>
+            <td><%=data[i].description%></td>
+            <%if(data[i].status == 1){%>
+              <td>
+                <a href="/admin/resolveComplaint/<%=data[i].id%>"><button>Resolved</button></a>
+                <a href="/admin/rejectComplaint/<%=data[i].id%>"><button>Rejected</button>
+              </td>
+            <%}else if(data[i].status == 2) {%>
+              <td>Solved</td>
+            <% } else {%>
+              <td>Rejected</td>
+            <% } %>  
+          </tbody>          
+        <%}%>
+
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>

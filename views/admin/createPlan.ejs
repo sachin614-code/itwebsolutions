@@ -1,0 +1,82 @@
+<!-- Main content -->
+<section class="content">
+ <div class="container-fluid">
+   <!-- SELECT2 EXAMPLE -->
+   <div class="card card-default">
+     <div class="card-header">
+       <h3 class="card-title">Create Plans</h3>
+       <div class="card-tools">
+         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+       </div>
+     </div>
+     <!-- /.card-header -->
+     <div class="card-body">  
+       <div class="row">
+         <div class="col-md-6">
+           <div class="form-group">
+              <!-- form start -->
+              <form action="" id="planSave" method="post">
+                <div class="card-body">
+
+                  <div class="form-group">
+                    <label for="plan_name">Plan Name</label>
+                    <input type="text" class="form-control" id="plan_name" name="plan_name" placeholder="Plan Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="days">Days</label>
+                    <input type="number" class="form-control" id="days" name="days" placeholder="Days" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="price">Email</label>
+                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter Price" required>
+                  </div>  
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!-- /.card-body -->
+   </div>
+   <!-- /.card -->
+
+   <div class="card">
+     <div class="card-header">
+       <h3 class="card-title">Plans Listing</h3>
+     </div>
+     <div class="text-center" style="color: green;">
+       <strong><%= messages.success %></strong>
+     </div>
+     <!-- /.card-header -->
+     <div class="card-body">
+       <table id="example1" class="table table-bordered table-hover">
+         <thead>
+         <tr>
+           <th>Plan Name</th>
+           <th>Days</th>
+           <th>Price</th>
+           <th>Action</th>
+         </tr>
+         </thead>
+         <tbody>
+          <% if(data.length>0){ %>
+            <% data.forEach(el =>{ %>
+              <tr>
+                <td><%= el.plan_name %></td>
+                <td><%= el.days %></td>
+                <td><%= el.price %></td>
+                <td><a href="/admin/delPlan/<%=el.id%>"><button>Delete</button></a></td>
+              </tr> 
+              <% }) %>
+           <% } %>
+         </tbody>
+       </table>
+     </div>
+     <!-- /.card-body -->
+   </div>
+ </div><!-- /.container-fluid -->
+</section>

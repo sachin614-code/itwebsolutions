@@ -1,0 +1,70 @@
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+      <!-- SELECT2 EXAMPLE -->
+      <div class="card card-default">
+        <div class="card-header">
+            <div class="text-center" style="color: green;">
+                <strong><%= messages.success %></strong>
+              </div>
+          <h3 class="card-title">Change Password</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                 <!-- form start -->
+                 <form action="/admin/setPassword" id="changepassword" method="post">
+                   <div class="card-body">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                      </div>   
+                     <div class="form-group">
+                       <label for="fname">Current Paasword</label>
+                       <input  type="password" name="password" id="password" class="form-control" placeholder="***********">
+                     </div>
+                     <div class="form-group">
+                       <label for="lname">New Paasword</label>
+                       <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder="***********">
+                     </div>  
+                   </div>
+                   <!-- /.card-body -->
+                   <div class="card-footer">
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                   </div>
+                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+   
+    </div><!-- /.container-fluid -->
+   </section>
+   <script>   
+   $( "#changepassword" ).validate({
+        rules: {
+            password: {
+      			required: true,
+      			min: 8
+    		     },
+            cpassword:{
+      			required: true,
+      			min: 8
+    		     },
+            email:{
+                required: true,
+                email : true
+            },
+        }
+    });
+    
+    
+   </script>
